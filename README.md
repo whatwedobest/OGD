@@ -10,7 +10,7 @@ Wireframes and, later, the build for the OpenGate Data website redesign (includi
 | Home | `wireframes/home.html` |
 | Broker Program (internal page template) | `wireframes/broker-program.html` |
 
-Grayscale on purpose: color, type and logo arrive with the new OGD identity. Bracketed text marks content the client must supply or approve.
+v2: Clover-inspired layout in one sans-serif family (Archivo). Grayscale with one placeholder accent; color and logo arrive with the new OGD identity. Bracketed text marks content the client must supply or approve.
 
 ## Viewing
 
