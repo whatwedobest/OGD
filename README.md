@@ -10,7 +10,7 @@ Wireframes and, later, the build for the OpenGate Data website redesign (includi
 | Home | `wireframes/home.html` |
 | Broker Program (internal page template) | `wireframes/broker-program.html` |
 
-v2: Clover-inspired layout in one sans-serif family (Archivo). Grayscale with one placeholder accent; color and logo arrive with the new OGD identity. Bracketed text marks content the client must supply or approve.
+v3: Clover-inspired layout in Archivo, hero video loop, green accent #8DC63F (deep green #3E6B14 for headline words on light backgrounds). Logo arrives with the new OGD identity. Bracketed text marks content the client must supply or approve.
 
 ## Viewing
 
