@@ -1,0 +1,78 @@
+<!--meta {"path": "submit-a-deal/", "title": "Submit a Deal | OpenGate Data Broker Submissions", "description": "Submit a declined or stacked MCA file to OpenGate Data through a secure upload. Within hours it's on your CRM board with an underwriter ready to call.", "nav": "", "crumb": "Submit a Deal"} -->
+<section class="wrap page-hero">
+{{breadcrumb}}
+<div class="split-head" style="margin-bottom: 0;">
+<div class="stack"><span class="eyebrow">For brokers and ISOs</span><h1>Submit <span class="hl">a deal.</span></h1></div>
+<div><p class="lead">Send a declined or stacked file in a few minutes. Within hours, it's on your CRM board with an underwriter ready to call.</p><p class="small">Business owner? <a href="{{root}}gateway-consolidators/#review">Request a Gateway review</a> instead.</p></div>
+</div>
+</section>
+
+<section class="section wrap" style="padding-top: 40px;">
+<div class="cols">
+<aside class="stack" style="flex: 1 1 320px;">
+<div class="callout"><span class="eyebrow">Best fit</span><ul class="ticks" style="margin-top: 12px; font-size: 16px;"><li><strong>$30K+</strong> total MCA debt</li><li><strong>$8K+</strong> combined monthly obligations</li><li>Merchant's authorization to share</li></ul><p class="small" style="margin-top: 12px;">Other files are considered case by case. No minimum submissions.</p></div>
+<div class="callout"><span class="eyebrow">Your data, protected</span><p style="margin-top: 10px; font-size: 15px; line-height: 1.6; color: var(--ink-2);">Statements go through a secure upload and are only accessible to authorized OpenGate and Gateway personnel reviewing the file. They're never sent as email or CRM attachments.</p></div>
+<div class="callout"><span class="eyebrow">Questions?</span><p style="margin-top: 10px; font-size: 15px; line-height: 1.6;"><a href="tel:+15612231688">(561) 223-1688</a><br><a href="{{booking}}" rel="noopener" target="_blank">Book a 15-minute call</a></p></div>
+</aside>
+
+<form class="form" data-intake="broker" data-success="Thank you. Your file was received. It will be on your CRM board shortly, with an underwriter ready to call." novalidate enctype="multipart/form-data" style="flex: 2 1 600px;">
+<fieldset>
+<legend>About you</legend>
+<div class="form-grid">
+<label class="field">Your name<input type="text" name="broker_name" autocomplete="name" required></label>
+<label class="field">Company / ISO<input type="text" name="broker_company" autocomplete="organization" required></label>
+<label class="field">Email<input type="email" name="broker_email" autocomplete="email" required data-msg="Enter a valid email."></label>
+<label class="field">Phone<input type="tel" name="broker_phone" autocomplete="tel" required></label>
+</div>
+</fieldset>
+
+<fieldset>
+<legend>The merchant</legend>
+<div class="form-grid">
+<label class="field">Legal business name<input type="text" name="merchant_business" required></label>
+<label class="field">State<input type="text" name="merchant_state" required></label>
+<label class="field">Owner / contact name<input type="text" name="merchant_contact" required></label>
+<label class="field">Contact phone <span class="opt">(optional)</span><input type="tel" name="merchant_phone"></label>
+</div>
+</fieldset>
+
+<fieldset>
+<legend>MCA positions</legend>
+<div class="form-grid">
+<label class="field">Number of positions<select name="positions" required><option value="">Select</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></label>
+<label class="field">Total MCA debt (approx.)<select name="total_debt" required><option value="">Select</option><option>Under $30,000</option><option>$30,000–$75,000</option><option>$75,000–$150,000</option><option>$150,000–$300,000</option><option>Over $300,000</option></select></label>
+<label class="field">Combined monthly obligation (approx.)<select name="monthly_obligation" required><option value="">Select</option><option>Under $8,000</option><option>$8,000–$20,000</option><option>$20,000–$50,000</option><option>Over $50,000</option></select></label>
+<label class="field">Payment frequency<select name="frequency"><option value="">Select</option><option>Daily</option><option>Weekly</option><option>Mixed</option></select></label>
+</div>
+<label class="field">Why was the file declined? <span class="opt">(optional)</span><textarea name="decline_reason" placeholder="Too many positions, low balances, time in business…"></textarea></label>
+</fieldset>
+
+<fieldset>
+<legend>Merchant contact</legend>
+<p class="small" style="margin: 0;">How would you like us to handle the merchant?</p>
+<div class="choice-row">
+<label class="choice"><input type="radio" name="contact_preference" value="I'll introduce you on a discovery call" required data-msg="Choose one."><span>I'll introduce you</span></label>
+<label class="choice"><input type="radio" name="contact_preference" value="Contact the merchant; keep me updated"><span>Contact them, keep me updated</span></label>
+<label class="choice"><input type="radio" name="contact_preference" value="Keep me anonymous"><span>Keep me anonymous</span></label>
+</div>
+</fieldset>
+
+<fieldset class="dropzone-wrap">
+<legend>Bank statements</legend>
+<div class="dropzone" tabindex="0" role="button" aria-describedby="dz-hint">
+<input type="file" name="statements" accept="application/pdf,.pdf" multiple aria-label="Upload bank statements (PDF)">
+<strong>Drop bank statements here, or click to choose</strong>
+<p class="small" id="dz-hint">PDF only, up to 25 MB each. Recent business bank statements.</p>
+<ul class="file-list"></ul>
+</div>
+</fieldset>
+
+<label class="consent"><input type="checkbox" name="merchant_authorization" value="yes" required data-msg="You must confirm the merchant's authorization."><span><strong>I confirm I have the merchant's authorization</strong> to share their information and bank statements with OpenGate Data for review.</span></label>
+<label class="consent"><input type="checkbox" name="contact_consent" value="yes" required data-msg="Please confirm to continue."><span>I agree that OpenGate Data may contact me by phone, email or text about this submission, and I've read the <a href="{{root}}privacy-policy/">Privacy Policy</a>.</span></label>
+
+<div class="form-status" role="status" tabindex="-1" hidden></div>
+<button class="btn btn--dark btn--lg" type="submit">Submit securely</button>
+<p class="form-note">Statements are stored in secure, access-controlled storage. Our team receives the submission details and a secure link to the files. Submitting a file is not an approval and does not guarantee a commission.</p>
+</form>
+</div>
+</section>
