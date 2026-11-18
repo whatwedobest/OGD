@@ -6,15 +6,14 @@ Wireframes and, later, the build for the OpenGate Data website redesign (includi
 
 | Page | File |
 | --- | --- |
-| Review index | `index.html` |
-| Home | `wireframes/home.html` |
+| Home (site root) | `index.html` |
 | Broker Program (internal page template) | `wireframes/broker-program.html` |
 
 v4: Clover-inspired layout in Archivo, OGD logo mark, hero video loop, green accent #93CA3A (deep green #3E6B14 for headline words on light backgrounds). Bracketed text marks content the client must supply or approve.
 
 ## Viewing
 
-With GitHub Pages on (Settings › Pages › Deploy from branch › `main` / root), the review index is at
+With GitHub Pages on (Settings › Pages › Deploy from branch › `main` / root), Home is at
 `https://whatwedobest.github.io/OGD/`.
 
 Pages carry `noindex, nofollow` so search engines skip them during review.
