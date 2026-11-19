@@ -1,0 +1,26 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/services", "destination": "/declined-lead-monetization/", "permanent": true },
+    { "source": "/services-1", "destination": "/gateway-consolidators/", "permanent": true },
+    { "source": "/terms-conditions", "destination": "/terms/", "permanent": true },
+    { "source": "/cart", "destination": "/", "permanent": true },
+    { "source": "/wireframes/home.html", "destination": "/", "permanent": false }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [ { "key": "Cache-Control", "value": "no-store" }, { "key": "X-Robots-Tag", "value": "noindex, nofollow" } ]
+    }
+  ]
+}

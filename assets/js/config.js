@@ -1,16 +1,13 @@
-/* OpenGate Data — form endpoints.
-   Leave an endpoint empty while the secure intake service is not connected:
-   the form validates, then shows a beta notice and sends nothing.
+/* OpenGate Data — form intake settings.
 
-   When the intake service is live, set each endpoint to its URL. The service is expected to:
-   1. receive the form as multipart/form-data,
-   2. store bank statements in private, encrypted storage,
-   3. create the Monday item (Broker Form board or Gateway Form board) with the
-      submission details and a secure, access-controlled link to the files,
-      never the statements as attachments,
-   4. return JSON { "ok": true }. */
+   intakeEnabled: false  → forms validate, then show a beta notice and send nothing
+                           (use this on any host without the /api functions, e.g. GitHub Pages).
+   intakeEnabled: true   → forms send to the secure intake on this same site:
+                           statements upload straight to private storage (/api/upload),
+                           then the details go to /api/submit, which creates the monday.com
+                           item with secure, expiring links to the files (never attachments). */
 window.OGD_CONFIG = {
-  brokerEndpoint: "",
-  gatewayEndpoint: "",
+  intakeEnabled: false,
+  apiBase: "/api",
   bookingUrl: "https://calendar.app.google/JTbyWT2rURonvT2TA"
 };

@@ -1,0 +1,20 @@
+{
+  "name": "opengatedata-site",
+  "private": true,
+  "type": "module",
+  "description": "OpenGate Data website: static pages plus the secure form intake (Vercel functions).",
+  "scripts": {
+    "build:pages": "python3 build/build.py",
+    "build:client": "esbuild build/blob-client-entry.js --bundle --minify --format=iife --global-name=OGDBlob --outfile=assets/js/blob-client.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "@vercel/blob": "2.8.2"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.9"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
