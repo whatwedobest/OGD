@@ -338,7 +338,7 @@ p { margin: 0; }
 /* ---------- Footer ---------- */
 .site-footer { border-top: 1px solid var(--line); }
 .footer-top { padding-top: 64px; padding-bottom: 40px; display: grid; grid-template-columns: minmax(220px, 1.2fr) repeat(4, minmax(150px, 1fr)); gap: 32px; }
-.footer-top img { height: 48px; width: auto; }
+.footer-top .footer-logo { height: 40px; width: auto; display: block; }
 .footer-col { display: flex; flex-direction: column; gap: 4px; font-size: 14px; line-height: 2; color: var(--ink-2); }
 .footer-col strong { color: var(--ink); font-size: 15px; }
 .footer-col a { color: var(--ink-2); text-decoration: none; }

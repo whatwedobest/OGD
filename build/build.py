@@ -113,7 +113,7 @@ def footer(root):
     )
     return f"""<footer class="site-footer">
 <div class="wrap footer-top">
-<div class="footer-brand"><img src="{root}assets/img/ogd-mark.png" alt="OpenGate Data" width="59" height="48"><p>{s['tagline']}<br>{s['working_tagline']}</p></div>
+<div class="footer-brand"><a href="{root or './'}" aria-label="OpenGate Data home"><img class="footer-logo" src="{root}assets/img/ogd-logo-h-green.svg" alt="OpenGate Data" width="248" height="40"></a><p>{s['tagline']}<br>{s['working_tagline']}</p></div>
 <div class="footer-col"><strong>Partner program</strong><a href="{root}broker-program/">Broker Program</a><a href="{root}how-it-works/">How It Works</a><a href="{root}submission-criteria/">Submission Criteria</a><a href="{root}submit-a-deal/">Submit a Deal</a></div>
 <div class="footer-col"><strong>Solutions</strong><a href="{root}declined-lead-monetization/">Declined Lead Monetization</a><a href="{root}gateway-consolidators/">Gateway Consolidators</a><a href="{root}records/">Records</a></div>
 <div class="footer-col"><strong>Company</strong><a href="{root}about/">About</a><a href="{root}resources/">Resources</a><a href="{root}contact/">Contact</a><a href="{s['booking']}" rel="noopener" target="_blank">Book a Call</a></div>
