@@ -91,3 +91,25 @@ test("gateway inquiry goes to the gateway board; monday errors return a friendly
   assert.equal(res.status, 502);
   assert.match((await res.json()).error, /couldn't send/);
 });
+
+test("fixed column values and fallback when monday rejects column values", async () => {
+  process.env.MONDAY_BROKER_COLUMNS = JSON.stringify({ broker_email: { id: "email_x", type: "email" }, _status: { id: "color_x", type: "status", value: "New" } });
+  const cols = lib.columnValues("broker", broker);
+  assert.deepEqual(cols.color_x, { label: "New" });
+  assert.equal(cols.email_x.email, "pat@example.com");
+  const seen = [];
+  globalThis.fetch = async (u, init) => {
+    const b = JSON.parse(init.body);
+    if (b.query.includes("create_item")) {
+      seen.push(b.variables.cols);
+      if (seen.length === 1) return new Response(JSON.stringify({ errors: [{ message: "invalid phone" }] }), { status: 200 });
+      return new Response(JSON.stringify({ data: { create_item: { id: "5" } } }), { status: 200 });
+    }
+    return new Response(JSON.stringify({ data: { create_update: { id: "1" } } }), { status: 200 });
+  };
+  const res = await submit(new Request("https://x/api/submit", { method: "POST", body: JSON.stringify({ form: "broker", fields: broker }) }));
+  assert.equal(res.status, 200);
+  assert.equal(seen.length, 2);
+  assert.equal(seen[1], "{}");
+  delete process.env.MONDAY_BROKER_COLUMNS;
+});

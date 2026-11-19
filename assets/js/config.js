@@ -7,7 +7,9 @@
                            then the details go to /api/submit, which creates the monday.com
                            item with secure, expiring links to the files (never attachments). */
 window.OGD_CONFIG = {
-  intakeEnabled: false,
+  // On automatically wherever the /api functions run (Vercel / opengatedata.com);
+  // off on GitHub Pages and when pages are opened as local files.
+  intakeEnabled: location.protocol !== "file:" && !/\.github\.io$/.test(location.hostname),
   apiBase: "/api",
   bookingUrl: "https://calendar.app.google/JTbyWT2rURonvT2TA"
 };
