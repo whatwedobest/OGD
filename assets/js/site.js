@@ -87,6 +87,73 @@
     });
   });
 
+
+  /* ---- Secure intake: upload statements to private storage, then send details ---- */
+  var blobLib = null;
+  function loadBlobClient() {
+    if (window.OGDBlob) return Promise.resolve(window.OGDBlob);
+    if (blobLib) return blobLib;
+    blobLib = new Promise(function (resolve, reject) {
+      var s = document.createElement("script");
+      var me = document.querySelector('script[src*="assets/js/site.js"]');
+      s.src = me ? me.src.replace(/site\.js(\?.*)?$/, "blob-client.js") : "/assets/js/blob-client.js";
+      s.onload = function () { resolve(window.OGDBlob); };
+      s.onerror = function () { blobLib = null; reject(new Error("upload library failed to load")); };
+      document.head.appendChild(s);
+    });
+    return blobLib;
+  }
+  function safeName(name) {
+    return String(name).replace(/\.pdf$/i, "").replace(/[^a-zA-Z0-9_-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "statement";
+  }
+  function sendSubmission(form, cfg, btn) {
+    var kind = form.getAttribute("data-intake");
+    var fields = {};
+    Array.prototype.forEach.call(form.elements, function (el) {
+      if (!el.name || el.type === "file" || el.name === "website") return;
+      if ((el.type === "checkbox" || el.type === "radio") && !el.checked) return;
+      fields[el.name] = el.value;
+    });
+    var honeypot = form.querySelector('input[name="website"]');
+    var fileInput = form.querySelector("input[type=file]");
+    var files = fileInput ? Array.prototype.slice.call(fileInput.files) : [];
+    var batch = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+
+    var uploads = Promise.resolve([]);
+    if (files.length) {
+      uploads = loadBlobClient().then(function (lib) {
+        var done = 0;
+        btn.textContent = "Uploading statements… 0 of " + files.length;
+        return Promise.all(files.map(function (f) {
+          return lib.upload("statements/" + batch + "/" + safeName(f.name) + ".pdf", f, {
+            access: "private",
+            handleUploadUrl: cfg.apiBase + "/upload",
+            contentType: "application/pdf",
+            multipart: f.size > 5 * 1048576
+          }).then(function (res) {
+            done += 1;
+            btn.textContent = "Uploading statements… " + done + " of " + files.length;
+            return { pathname: res.pathname, name: f.name, size: f.size };
+          });
+        }));
+      });
+    }
+
+    return uploads.then(function (uploaded) {
+      btn.textContent = "Sending securely…";
+      return fetch(cfg.apiBase + "/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ form: kind, fields: fields, files: uploaded, website: honeypot ? honeypot.value : "" })
+      });
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (data) {
+        if (!r.ok || !data.ok) { var e = new Error("submit failed"); e.userMessage = data.error; throw e; }
+        return data;
+      });
+    });
+  }
+
   /* ---- Forms ---- */
   function showStatus(form, kind, msg) {
     var box = form.querySelector(".form-status");
@@ -140,23 +207,22 @@
       }
 
       var cfg = window.OGD_CONFIG || {};
-      var endpoint = cfg[form.getAttribute("data-intake") + "Endpoint"];
-      if (!endpoint) {
+      if (!cfg.intakeEnabled) {
         showStatus(form, "warn", "Beta preview: this form isn't connected yet, so nothing was sent. When the site launches, submissions go to the OpenGate team through a secure intake.");
         return;
       }
 
       var btn = form.querySelector("button[type=submit]");
-      btn.disabled = true; var label = btn.textContent; btn.textContent = "Sending securely…";
-      fetch(endpoint, { method: "POST", body: new FormData(form) })
-        .then(function (r) { return r.ok ? r.json().catch(function () { return { ok: true }; }) : Promise.reject(r.status); })
+      var label = btn.textContent;
+      btn.disabled = true;
+      sendSubmission(form, cfg, btn)
         .then(function () {
           form.reset();
           form.querySelectorAll(".file-list").forEach(function (l) { l.innerHTML = ""; });
           showStatus(form, "ok", form.getAttribute("data-success") || "Thank you. Your submission was received and our team will be in touch.");
         })
-        .catch(function () {
-          showStatus(form, "err", "Something went wrong and your submission was not sent. Please try again, or call (561) 223-1688.");
+        .catch(function (err) {
+          showStatus(form, "err", (err && err.userMessage) || "Something went wrong and your submission was not sent. Please try again, or call (561) 223-1688.");
         })
         .then(function () { btn.disabled = false; btn.textContent = label; });
     });
