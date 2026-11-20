@@ -78,7 +78,7 @@ test("broker submission creates a monday item on the broker board with a summary
   assert.equal(calls[0].url, "https://api.monday.com/v2");
   assert.equal(calls[0].auth, "test-token");
   assert.equal(calls[0].body.variables.board, "111");
-  assert.equal(calls[0].body.variables.name, "Sunrise Cafe LLC (via Acme ISO)");
+  assert.equal(calls[0].body.variables.name, "Pat Broker – Sunrise Cafe LLC");
   assert.match(calls[1].body.variables.body, /Merchant contact preference: Keep me anonymous/);
 });
 
@@ -112,4 +112,12 @@ test("fixed column values and fallback when monday rejects column values", async
   assert.equal(seen.length, 2);
   assert.equal(seen[1], "{}");
   delete process.env.MONDAY_BROKER_COLUMNS;
+});
+
+test("date columns can be stamped with today's date", () => {
+  process.env.MONDAY_GATEWAY_COLUMNS = JSON.stringify({ _date: { id: "date_x", type: "date", value: "today" }, company: { id: "text_x" } });
+  const c = lib.columnValues("gateway", { company: "Firm" });
+  assert.match(c.date_x.date, /^\d{4}-\d{2}-\d{2}$/);
+  assert.equal(c.text_x, "Firm");
+  delete process.env.MONDAY_GATEWAY_COLUMNS;
 });
